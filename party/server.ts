@@ -16,7 +16,7 @@ export default class Server extends TinyBasePartyKitServer {
   onConnect(connection: Party.Connection) {
     console.log('Connected', connection.id);
 
-    connection.send('hello from server');
+    // connection.send('hello from server');
   }
 
   onMessage(message: string, connection: Party.Connection) {
