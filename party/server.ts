@@ -1,6 +1,9 @@
 import * as Party from 'partykit/server';
 import { createStore } from 'tinybase';
-import { TinyBasePartyKitServer } from 'tinybase/persisters/persister-partykit-server';
+import {
+  TinyBasePartyKitServer,
+  hasStoreInStorage,
+} from 'tinybase/persisters/persister-partykit-server';
 
 export default class Server extends TinyBasePartyKitServer {
   constructor(readonly room: Party.Room) {
@@ -9,14 +12,27 @@ export default class Server extends TinyBasePartyKitServer {
     createStore().setValue('hello', 'server');
   }
 
-  onStart() {
+  async onStart() {
     console.log('Party started!');
+
+    const hasStore = await hasStoreInStorage(this.room.storage);
+
+    console.log('hasStoreInStorage', hasStore);
+    if (hasStore) {
+      const storeData = await this.room.storage.list();
+
+      console.log({ storeData });
+    }
   }
 
   onConnect(connection: Party.Connection) {
     console.log('Connected', connection.id);
 
     // connection.send('hello from server');
+  }
+
+  onRequest(request: Party.Request) {
+    return super.onRequest(request);
   }
 
   onMessage(message: string, connection: Party.Connection) {
