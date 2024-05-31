@@ -8,7 +8,7 @@ import {
 } from 'tinybase/persisters/persister-partykit-client';
 import { Provider, useCreatePersister } from 'tinybase/ui-react';
 
-import { partyKitUrl, roomId } from '@/config';
+import { partyKitHost, roomId } from '@/config';
 
 type Props = {
   children: React.ReactNode;
@@ -19,10 +19,12 @@ export default function TinyBaseProvider({ children }: Props) {
   useCreatePersister(
     store,
     (store) =>
-      createPartyKitPersister(store, new PartySocket({ host: partyKitUrl!, room: roomId })),
-    [roomId],
+      createPartyKitPersister(store, new PartySocket({ host: partyKitHost!, room: roomId }), {
+        storeProtocol: 'http',
+      }),
+    [],
     async (persister: PartyKitPersister) => {
-      await persister.startAutoLoad({}, { hello: 'client' });
+      await persister.startAutoLoad({}, {});
       await persister.startAutoSave();
     }
   );

@@ -1,10 +1,10 @@
 import usePartySocket from 'partysocket/react';
 
-import { partyKitUrl, roomId } from '@/config';
+import { partyKitHost, roomId } from '@/config';
 
 export default function PartyKit() {
   usePartySocket({
-    host: partyKitUrl,
+    host: partyKitHost,
     room: roomId,
 
     onOpen() {

@@ -1,2 +1,2 @@
-export const partyKitUrl = process.env.NEXT_PUBLIC_PARTYKIT_URL;
+export const partyKitHost = process.env.NEXT_PUBLIC_PARTYKIT_HOST;
 export const roomId = 'main';
